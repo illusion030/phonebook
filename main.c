@@ -8,6 +8,8 @@
 
 #ifdef OPT
 #define OUT_FILE "opt.txt"
+#elif BST
+#define OUT_FILE "bst.txt"
 #else
 #define OUT_FILE "orig.txt"
 #endif
@@ -53,9 +55,19 @@ int main(int argc, char *argv[])
     __builtin___clear_cache((char *) pHead, (char *) pHead + sizeof(entry));
 #endif
     clock_gettime(CLOCK_REALTIME, &start);
+
+#ifdef BST
+    int count = 0;
+#endif
+
     while (fgets(line, sizeof(line), fp)) {
         while (line[i] != '\0')
             i++;
+
+#ifdef BST
+        count++;
+#endif
+
         line[i - 1] = '\0';
         i = 0;
         e = append(line, e);
@@ -67,6 +79,10 @@ int main(int argc, char *argv[])
     fclose(fp);
 
     e = pHead;
+
+#ifdef BST
+    pHead = LinkedlistToBSTRecur(count, &e);
+#endif
 
     /* the givn last name to find */
     char input[MAX_LAST_NAME_SIZE] = "zyxel";
@@ -91,6 +107,11 @@ int main(int argc, char *argv[])
 
     printf("execution time of append() : %lf sec\n", cpu_time1);
     printf("execution time of findName() : %lf sec\n", cpu_time2);
+
+#ifdef BST
+    if (pHead->pRight) free(pHead->pRight);
+    if (pHead->pLeft) free(pHead->pLeft);
+#endif
 
     if (pHead->pNext) free(pHead->pNext);
     free(pHead);
