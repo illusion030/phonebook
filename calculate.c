@@ -64,10 +64,31 @@ int main(void)
         bst_sum_a += bst_a;
         bst_sum_f += bst_f;
     }
+    fclose(fp);
 
-    fprintf(output, "append() %lf %lf %lf\n",orig_sum_a / 100.0, opt_sum_a / 100.0, bst_sum_a / 100.0);
-    fprintf(output, "findName() %lf %lf %lf\n", orig_sum_f / 100.0, opt_sum_f / 100.0, bst_sum_f / 100.0);
-    fprintf(output, "TimeSum %lf %lf %lf", (orig_sum_a + orig_sum_f) / 100.0, (opt_sum_a + opt_sum_f) / 100.0, (bst_sum_a + bst_sum_f) / 100.0);
+    fp = fopen("combine.txt", "r");
+    if (!fp) {
+        fp = fopen("orig.txt", "r");
+        if (!fp) {
+            printf("ERROR opening input file opt.txt\n");
+            exit(0);
+        }
+    }
+    double combine_sum_a = 0.0, combine_sum_f = 0.0, combine_a, combine_f;
+    for (i = 0; i < 100; i++) {
+        if (feof(fp)) {
+            printf("ERROR: You need 100 datum instead of %d\n", i);
+            printf("run 'make run' longer to get enough information\n\n");
+            exit(0);
+        }
+        fscanf(fp, "%s %s %lf %lf\n", append, find, &combine_a, &combine_f);
+        combine_sum_a += combine_a;
+        combine_sum_f += combine_f;
+    }
+
+    fprintf(output, "append() %lf %lf %lf %lf\n",orig_sum_a / 100.0, opt_sum_a / 100.0, bst_sum_a / 100.0, combine_sum_a / 100.0);
+    fprintf(output, "findName() %lf %lf %lf %lf\n", orig_sum_f / 100.0, opt_sum_f / 100.0, bst_sum_f / 100.0, combine_sum_f / 100.0);
+    fprintf(output, "TimeSum %lf %lf %lf %lf", (orig_sum_a + orig_sum_f) / 100.0, (opt_sum_a + opt_sum_f) / 100.0, (bst_sum_a + bst_sum_f) / 100.0, (combine_sum_a + combine_sum_f) / 100.0);
     fclose(output);
     fclose(fp);
     return 0;

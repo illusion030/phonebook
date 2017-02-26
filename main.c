@@ -10,6 +10,8 @@
 #define OUT_FILE "opt.txt"
 #elif BST
 #define OUT_FILE "bst.txt"
+#elif COMBINE
+#define OUT_FILE "combine.txt"
 #else
 #define OUT_FILE "orig.txt"
 #endif
@@ -58,6 +60,8 @@ int main(int argc, char *argv[])
 
 #ifdef BST
     int count = 0;
+#elif COMBINE
+    int count = 0;
 #endif
 
     while (fgets(line, sizeof(line), fp)) {
@@ -65,6 +69,8 @@ int main(int argc, char *argv[])
             i++;
 
 #ifdef BST
+        count++;
+#elif COMBINE
         count++;
 #endif
 
@@ -81,6 +87,8 @@ int main(int argc, char *argv[])
     e = pHead;
 
 #ifdef BST
+    pHead = LinkedlistToBSTRecur(count, &e);
+#elif COMBINE
     pHead = LinkedlistToBSTRecur(count, &e);
 #endif
 
@@ -109,6 +117,9 @@ int main(int argc, char *argv[])
     printf("execution time of findName() : %lf sec\n", cpu_time2);
 
 #ifdef BST
+    if (pHead->pRight) free(pHead->pRight);
+    if (pHead->pLeft) free(pHead->pLeft);
+#elif COMBINE
     if (pHead->pRight) free(pHead->pRight);
     if (pHead->pLeft) free(pHead->pLeft);
 #endif
