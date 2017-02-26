@@ -27,8 +27,6 @@ entry *append(char lastName[], entry *e)
     e = e->pNext;
     strcpy(e->lastName, lastName);
     e->pNext = NULL;
-    e->pRight = NULL;
-    e->pLeft = NULL;
 
     return e;
 }

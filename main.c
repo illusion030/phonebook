@@ -117,11 +117,11 @@ int main(int argc, char *argv[])
     printf("execution time of findName() : %lf sec\n", cpu_time2);
 
 #ifdef BST
-    if (pHead->pRight) free(pHead->pRight);
-    if (pHead->pLeft) free(pHead->pLeft);
+    free(pHead->pRight);
+    free(pHead->pLeft);
 #elif COMBINE
-    if (pHead->pRight) free(pHead->pRight);
-    if (pHead->pLeft) free(pHead->pLeft);
+    free(pHead->pRight);
+    free(pHead->pLeft);
 #endif
 
     if (pHead->pNext) free(pHead->pNext);
