@@ -12,10 +12,7 @@ entry *findName(char lastName[], entry *pHead)
         cmp = strcmp(lastName, pHead->lastName);
         if(cmp == 0)
             return pHead;
-        if(cmp > 0)
-            pHead = pHead->pRight;
-        else
-            pHead = pHead->pLeft;
+        pHead = (cmp > 0) ? pHead->pRight : pHead->pLeft;
     }
     return NULL;
 }
