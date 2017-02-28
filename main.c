@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
     free(pHead->pLeft);
 #endif
 
-    if (pHead->pNext) free(pHead->pNext);
+    free(pHead->pNext);
     free(pHead);
 
     return 0;
